@@ -6,23 +6,46 @@ const jobTypes = {
   pilot: 'MAV',
   mechanic: 'Repair Ship',
   commander: 'Main Ship',
-  programmer: 'Any Ship!'
+  programmer: 'Any Ship!',
 };
 
-// Your code will go here
+// # Classes will go here.
+class CrewMember {
+  constructor(name, job, specialSkill, ship) {
+    this.name = name;
+    this.job = job;
+    this.specialSkill = specialSkill;
+    this.ship = null;
+  }
+  enterShip(ship) {
+    this.ship = ship;
+    ship.crew.push(this);
+    console.log(ship.crew);
+  }
+}
+class Ship {
+  constructor(name, type, ability, crew) {
+    this.name = name;
+    this.type = type;
+    this.ability = ability;
+    this.crew = [];
+  }
 
-
-
-
-
-
-
+  missionStatement() {
+    // console.log(this.crew);
+    if (this.crew.length === 0) {
+      return "Can't perform a mission yet.";
+    } else {
+      return `${this.ability}`;
+    }
+  }
+}
 // Begin by reading the tests and building a function that will full each one.
 // As you build, you might not have to build them in order, maybe you do...
 // These are the tests
-if (typeof describe === 'function'){
-  describe('CrewMember', function(){
-    it('should have a name, a job, a specialSkill and ship upon instantiation', function(){
+if (typeof describe === 'function') {
+  describe('CrewMember', function () {
+    it('should have a name, a job, a specialSkill and ship upon instantiation', function () {
       // this creates a CrewMember and passes the following arguments into its constructor:
       // 'Rick Martinez', 'pilot', 'chemistry'
       const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
@@ -32,7 +55,7 @@ if (typeof describe === 'function'){
       assert.equal(crewMember1.ship, null);
     });
 
-    it('can enter a ship', function(){
+    it('can enter a ship', function () {
       // this creates a new Ship. Can you build a class that can be called so that this Ship can be built?
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
       const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
@@ -43,8 +66,8 @@ if (typeof describe === 'function'){
     });
   });
 
-  describe('Ship', function(){
-    it('should have a name, a type, an ability and an empty crew upon instantiation', function(){
+  describe('Ship', function () {
+    it('should have a name, a type, an ability and an empty crew upon instantiation', function () {
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
       assert.equal(mav.name, 'Mars Ascent Vehicle');
       assert.equal(mav.type, 'MAV');
@@ -52,19 +75,33 @@ if (typeof describe === 'function'){
       assert.equal(mav.crew.length, 0);
     });
 
-    it('can return a mission statement correctly', function(){
+    it('can return a mission statement correctly', function () {
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
       const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
-      let hermes = new Ship('Hermes', 'Main Ship', 'Interplanetary Space Travel');
-      const crewMember2 = new CrewMember('Commander Lewis', 'commander', 'geology');
+      let hermes = new Ship(
+        'Hermes',
+        'Main Ship',
+        'Interplanetary Space Travel'
+      );
+      const crewMember2 = new CrewMember(
+        'Commander Lewis',
+        'commander',
+        'geology'
+      );
       assert.equal(mav.missionStatement(), "Can't perform a mission yet.");
       assert.equal(hermes.missionStatement(), "Can't perform a mission yet.");
 
       crewMember1.enterShip(mav);
-      assert.equal(mav.missionStatement(), "Ascend into low orbit");
+      assert.equal(mav.missionStatement(), 'Ascend into low orbit');
 
       crewMember2.enterShip(hermes);
-      assert.equal(hermes.missionStatement(), "Interplanetary Space Travel");
+      assert.equal(hermes.missionStatement(), 'Interplanetary Space Travel');
     });
   });
 }
+
+// const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
+// console.log(crewMember1.name, 'Rick Martinez');
+// console.log(crewMember1.job, 'pilot');
+// console.log(crewMember1.specialSkill, 'chemistry');
+// console.log(crewMember1.ship, null);
