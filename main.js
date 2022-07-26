@@ -20,7 +20,7 @@ class CrewMember {
   enterShip(ship) {
     this.ship = ship;
     ship.crew.push(this);
-    console.log(ship.crew);
+    // console.log(ship.crew);
   }
 }
 class Ship {
